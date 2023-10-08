@@ -1,14 +1,13 @@
 import requests
 from nflapi import NFL
 
-def fetch_nfl_schedule(url):
+def fetch_nfl_schedule(nfl):
     try:
-        response = requests.get(url)
+        response = requests.get(nfl)
         response.raise_for_status()
         return response.json()
-    except
-    requests.exceptions.RequestException as e:
-    print(f"Error fetching NFL schedule data: {e}")
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching NFL schedule data: {e}")
     return None
 
 def display_primetime_schedule(schedule):
@@ -23,9 +22,12 @@ def is_primetime_game(start_time):
      start_time_lower = start_time.lower()
      return ("sunday" in start_time_lower or "monday" in start_time_lower or "thursday" in start_time_lower) and "est" in start_time_lower and int(start_time_lower.split(":")[0]) >= 20
 
-current_week = nfl.schedule.current_week()
+
 
 nfl = NFL(ua="nflapi example script")
+
+current_week = nfl.schedule.current_week()
+
 
 nfl_schedule = fetch_nfl_schedule(nfl)
 
